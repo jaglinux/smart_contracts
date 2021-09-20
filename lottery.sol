@@ -33,7 +33,6 @@ contract lottery {
         winner_picked = true;
         lottery_result_block = block.number;
         winning_number = block.number % 10;
-        winning_number = 5;
     }
     
     function distribute_rewards() external payable{
