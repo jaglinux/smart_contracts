@@ -17,28 +17,26 @@ contract Token is ERC20,Ownable {
         _mint(_owner, _supply * (10 ** decimals()));
     }
     
-    function isRegistered(address _addr) private view returns(bool) {
+    function searchArray(address _addr) private view returns(bool, uint256) {
         uint256 len = registeredAddress.length;
         for(uint256 i=0; i < len; i++) {
-            if(_addr == registeredAddress[i]) {
-                return true;
+            if (registeredAddress[i] == _addr) {
+                return (true, i);
             }
         }
-        return false;
+        return (false, 0);
     }
     
-    function registerToStake(address _addr) private {
-        registeredAddress.push(_addr);
+    function isRegistered(address _addr) private view returns(bool val) {
+        (val,) = searchArray(_addr);
     }
     
     function deregisterToStake(address _addr) private {
         uint256 len= registeredAddress.length;
-        for(uint256 i=0; i < len; i++) {
-            if(registeredAddress[i] == _addr) {
-                registeredAddress[i] = registeredAddress[len-1];
-                registeredAddress.pop();
-                return;
-            }
+        (bool val, uint256 i) = searchArray(_addr);
+        if(val) {
+            registeredAddress[i] = registeredAddress[len-1];
+            registeredAddress.pop();
         }
     }
     
@@ -46,7 +44,7 @@ contract Token is ERC20,Ownable {
         require(balanceOf(msg.sender) >= _amount, "staking amount is more than balance");
         //transfer(address(this), _amount);
         if(isRegistered(msg.sender) == false) {
-            registerToStake(msg.sender);
+            registeredAddress.push(msg.sender);
         }
         _burn(msg.sender, _amount);
         staked[msg.sender] += _amount;
@@ -59,10 +57,8 @@ contract Token is ERC20,Ownable {
             deregisterToStake(msg.sender);
             //harvest if reward amount is not 0
             if(rewards[msg.sender] > 0) {
-                harvest(rewards[msg.sender]);
+                harvest_all();
             }
-            //flush rewards
-            rewards[msg.sender] = 0;
         }
         //_transfer(address(this), msg.sender, _amount);
         _mint(msg.sender, _amount);
@@ -85,8 +81,14 @@ contract Token is ERC20,Ownable {
     }
     
     function harvest(uint256 _amount) public {
-        require(rewards[msg.sender] > 0, "Sorry, no rewards");
+        require(rewards[msg.sender] >= _amount, "Sorry, no rewards");
         rewards[msg.sender] -= _amount;
         _mint(msg.sender, _amount);
+    }
+    
+    function harvest_all() public {
+        harvest(rewards[msg.sender]);
+        //flush rewards
+        rewards[msg.sender] = 0;
     }
 }
