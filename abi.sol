@@ -26,6 +26,12 @@ contract my_abi {
         emit log(result);
     }
     
+    function constructData2(string memory _func, uint256 _val) public {
+        bytes memory result = new bytes(64);
+        result = abi.encodeWithSignature(_func, _val);
+        emit log(result);
+    }
+    
     //follows abi encoding
     function encodeAbi(string memory a) public pure returns(bytes memory) {
         return abi.encode(a);
