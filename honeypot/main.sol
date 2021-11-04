@@ -9,6 +9,8 @@ contract A {
     }
 }
 
+//Pass A address to call log from contract A
+//Pass Hack address to call log from contract hack even though contract type param is contract A !!!
 contract B {
     function echo(address a) public {
         A(a).echo();
