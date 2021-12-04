@@ -1,26 +1,29 @@
-1. Deploy ERC20 contract.
-2. Deploy ERC20MerkleAirDrop contract and the pass the ERC20 contract address.
-3. Example of claim()
-Consider 4 addresses below.
+# 1. Deploy ERC20 contract.
+# 2. Deploy ERC20MerkleAirDrop contract and the pass the ERC20 contract address.
+# 3. Example of claim()
+## Consider 4 addresses below.
 0x1aD91ee08f21bE3dE0BA2ba6918E714dA6B45836
-0x8fb3b37f83698b75d90145d8f536810ad6cdb107
-0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511
-0xddfabcdc4d8ffc6d5beaf154f18b778f892a0740
 
-Hash of the address
+0x8fb3b37f83698b75d90145d8f536810ad6cdb107
+
+0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511
+
+0xddfabcdc4d8ffc6d5beaf154f18b778f892a0740 
+
+## Hash of the address
 0x38b74bc12b97e00aeca693680c257c2a2a8a3ee73b03e5c72dd1e9fb838007f8       
 0x835ba2995566015bd49e561c1210937952c6843e10010f333a65b51f69247b44
 0xd82e13d4721159b1a752e48e3fc7a3c2c16938d839b8968e55bc9229326f38f6 
 0x57134051fbd18a955da95c45a65ebe627d22923ea500c5255703f91d139b7d87
 
-Hash of 1,2 and 3,4
+## Hash of 1,2 and 3,4
 0x2fdb8fb37bd2dcb40f853031b8a1f6a9b7744e9bcba435058a85fa8c157da0d0
 0x97bcb6ec8d1a742a9e39be8bf20cd581d3af6b4faa63e4e72d67ff57a81b72e9
 
-merkle root hash
+## merkle root hash
 0xdd1b8d11e7734e8c06816161afb24a5dfa82761dd92afaec2f037f0cd0e369f4
 
-Parameters to claim function.
+## Parameters to claim function.
 ["0x835ba2995566015bd49e561c1210937952c6843e10010f333a65b51f69247b44", "0x97bcb6ec8d1a742a9e39be8bf20cd581d3af6b4faa63e4e72d67ff57a81b72e9"], 0x1aD91ee08f21bE3dE0BA2ba6918E714dA6B45836
 
 ["0x835ba2995566015bd49e561c1210937952c6843e10010f333a65b51f69247b44", "0x97bcb6ec8d1a742a9e39be8bf20cd581d3af6b4faa63e4e72d67ff57a81b72e9"], 0x8fb3b37f83698b75d90145d8f536810ad6cdb107
