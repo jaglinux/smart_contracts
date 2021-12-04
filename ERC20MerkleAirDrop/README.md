@@ -1,6 +1,7 @@
 # 1. Deploy ERC20 contract.
 # 2. Deploy ERC20MerkleAirDrop contract and the pass the ERC20 contract address.
-# 3. Example of claim()
+# 3. Tranfer ERC20 token to ERC20MerkleAirDrop contract address so that it can transfer Token to claimers.
+# 4. Example of claim()
 ## Consider 4 addresses below.
 0x1aD91ee08f21bE3dE0BA2ba6918E714dA6B45836
 
