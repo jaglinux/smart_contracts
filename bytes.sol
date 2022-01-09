@@ -8,4 +8,27 @@ contract byteContract {
         string memory b = string(c);
         return b;
     }
+
+    function compare(string memory a, string memory b) public pure returns(bool) {
+        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
+    }
+
+    function concat(string memory a, string memory b) public pure returns(string memory) {
+        return string(abi.encodePacked(a, b));
+    }
+
+    function itoa(uint256 num) public pure returns(string memory) {
+        uint256 digits;
+        uint256 num1 = num;
+        while(num1 != 0) {
+            digits+=1;
+            num1 /= 10;
+        }
+        bytes memory str = new bytes(digits);
+        for(uint256 i=digits; i > 0 ; i-- ) {
+            str[i-1] = bytes1(uint8(48 + uint256(num%10)));
+            num /= 10;
+        }
+        return string(str);
+    }
 }
