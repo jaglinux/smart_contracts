@@ -8,7 +8,6 @@ Logical Example:
 Given [1, 34, 5, 7, 62] and [7, 34, 9, 5, 6], you should return an array containing [1, 62, 9, 6] (order does not matter)
 */
 
-/*
 //Sorting function credit to https://gist.github.com/subhodi/b3b86cc13ad2636420963e692a4d896f
 contract Test1 {
 
