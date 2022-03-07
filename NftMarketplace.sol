@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// Credit https://gist.github.com/dabit3/eb8866adc22bd86cabf5e6604b408e4a
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
