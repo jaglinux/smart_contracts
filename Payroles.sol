@@ -2,7 +2,9 @@ pragma solidity ^0.8.7;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
-
+// Code review from https://forum.openzeppelin.com/t/high-gas-fee-on-withdrawn-function/29985/5
+// Original code from https://bscscan.com/address/0xA9ECd08c0faeBFaFdDD0A701eDE23fA08AeB4CF3#code
+// Modified original code to fix issues
 contract PayRole{
 
     address owner;
@@ -10,9 +12,6 @@ contract PayRole{
     mapping(address => bool) allowed;
     mapping(address => uint) allowance;
     mapping(address => uint) moment;
-// Code review from https://forum.openzeppelin.com/t/high-gas-fee-on-withdrawn-function/29985/5
-// Original code from https://bscscan.com/address/0xA9ECd08c0faeBFaFdDD0A701eDE23fA08AeB4CF3#code
-// Modified original code to fix issues
     
     event devAdded(address);
     event allowanceAdded(address, uint);
