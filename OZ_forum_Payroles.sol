@@ -1,18 +1,19 @@
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.7;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-
 // Code review from https://forum.openzeppelin.com/t/high-gas-fee-on-withdrawn-function/29985/5
 // Original code from https://bscscan.com/address/0xA9ECd08c0faeBFaFdDD0A701eDE23fA08AeB4CF3#code
 // Modified original code to fix issues
+
 contract PayRole{
 
     address owner;
-    IERC20 immutabe BUSD;
+    IERC20  immutable  BUSD;
     mapping(address => bool) allowed;
     mapping(address => uint) allowance;
     mapping(address => uint) moment;
-    
+
     event devAdded(address);
     event allowanceAdded(address, uint);
     event allowanceRemoved(address, uint);
@@ -23,7 +24,7 @@ contract PayRole{
     event ownerClaimned(uint);
 
 
-    constructor (address _address) public {
+    constructor (address _address)  {
         owner = msg.sender;
         BUSD = IERC20(_address);
     }
@@ -68,7 +69,7 @@ contract PayRole{
         emit deposited(msg.sender, _amount);
     }
 
-    function getReward() external returns(uint){
+    function getReward() external view returns(uint){
         require(allowed[msg.sender] == true, 'This address is not allowed to check getReward');
         return (block.timestamp - moment[msg.sender]) * allowance[msg.sender];
     }
@@ -88,7 +89,7 @@ contract PayRole{
         emit ownerClaimned(_amount);
     }
 
-    function ownerCheckReward(address _address) external onlyOwner returns(uint){
+    function ownerCheckReward(address _address) external view onlyOwner returns(uint){
         return block.timestamp - moment[_address] * allowance[_address];
     }
 
