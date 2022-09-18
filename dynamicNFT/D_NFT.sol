@@ -1,19 +1,33 @@
-// SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.8.0 <0.9.0;
+// SPDX-License-Identifier: AGPL-3.0-only
+pragma solidity >=0.8.0;
 
 import "https://github.com/transmissions11/solmate/blob/main/src/tokens/ERC721.sol";
+import "https://github.com/transmissions11/solmate/blob/main/src/utils/LibString.sol";
 
 contract D_NFT is ERC721 {
+    using LibString for uint256;
+    string public baseURL;
+    uint256 totalSupply;
+    uint256 constant maxSupply = 10;
 
-    string public baseURI_string;
+    error MintOver();
+    constructor(string memory _name, string memory _symbol, string memory _base) 
+        ERC721(_name, _symbol) {
+            baseURL = _base;
+    }
 
-    constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
+    function tokenURI(uint256 id) public view virtual override returns (string memory) {
+        return string(abi.encodePacked(baseURL, id.toString(), ".json"));
+    }
 
-    function tokenURI(uint256 id) public view virtual override returns (string memory) {}
-
-    function _setBaseURI(string baseURI) private {
-        baseURI_string = baseURI;
+    function mint() external {
+        if(totalSupply > maxSupply) {
+            revert MintOver();
+        }
+        unchecked {
+            _mint(msg.sender, ++totalSupply);
+        }
     }
 
 }
