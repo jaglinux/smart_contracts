@@ -72,3 +72,20 @@ contract Timelock {
     }
 
 }
+
+contract Test {
+    error NotAuth();
+
+    uint256 public value;
+    address public timeLock;
+
+    constructor(address _timeLock) {
+        timeLock = _timeLock;
+        value = 1;
+    }
+
+    function changeValue(uint256 _value) external {
+        if(msg.sender != timeLock) revert NotAuth();
+        value = _value;
+    }
+}
