@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.0;
 
+//cast sig "changeValue(uint256)"
+//0xf965e32e
+//cast abi-encode "changeValue(uint256)" 5
+//0x0000000000000000000000000000000000000000000000000000000000000005
+//QueueProposal() params
+//0xf8e81D47203A594245E36C48e151709F0C19fBe8, "0xf965e32e", "0x0000000000000000000000000000000000000000000000000000000000000005", 1664440900
+
+
 contract Timelock {
     error ProposalListed();
     error ProposalTSError();
