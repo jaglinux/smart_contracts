@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.0;
-
-//cast sig "changeValue(uint256)"
-//0xf965e32e
-//cast abi-encode "changeValue(uint256)" 5
-//0x0000000000000000000000000000000000000000000000000000000000000005
-//QueueProposal() params
-//0xf8e81D47203A594245E36C48e151709F0C19fBe8, "0xf965e32e", "0x0000000000000000000000000000000000000000000000000000000000000005", 1664440900
-
+import "hardhat/console.sol";
 
 contract Timelock {
     error ProposalListed();
@@ -65,7 +58,7 @@ contract Timelock {
             revert ProposalExecuted();
         if(block.timestamp > (_ts+GRACE_PERIOD))
             revert ProposalTimeExpired();
-        (bool success, bytes memory log) = _addr.call(abi.encode(_func, _param));
+        (bool success, bytes memory log) = _addr.call(abi.encodePacked(_func, _param));
         if(success) {
             Proposals[_hash].executed = true;
         }
@@ -90,10 +83,12 @@ contract Test {
     constructor(address _timeLock) {
         timeLock = _timeLock;
         value = 1;
+        console.log("constructor");
     }
 
     function changeValue(uint256 _value) external {
         if(msg.sender != timeLock) revert NotAuth();
+        console.log("The value is ", _value);
         value = _value;
     }
 }
