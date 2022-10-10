@@ -3,4 +3,6 @@
 
 *impl_1.sol* 
 
-**2** 
+**2**
+*TransparentProxy_1.sol* --> Fixes the issues <br>
+
