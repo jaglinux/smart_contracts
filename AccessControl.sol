@@ -2,8 +2,6 @@
 pragma solidity ^0.8.0;
 
 contract AccessControl {
-    //Get the hash by making ownerHash an userHash as public, after that make it private 
-    // to same some gas!!!
     // 0xdf8b4c520ffe197c5343c6f5aec59570151ef9a492f2c624fd45ddde6135ec42
     bytes32 private constant ownerHash = keccak256(abi.encodePacked("ADMIN"));
     // 0x2db9fd3d099848027c2383d0a083396f6c41510d7acfd92adc99b6cffcf31e96
