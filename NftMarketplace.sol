@@ -15,7 +15,7 @@ contract NftMarketplace is ERC721URIStorage {
     uint256 price;
   }
 
-  mapping(uint256 => MarketItem) MarketItems;
+  mapping(uint256 => MarketItem) public MarketItems;
   address payable public owner;
   
   constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol)  {
@@ -32,12 +32,13 @@ contract NftMarketplace is ERC721URIStorage {
   }
 
   function createToken(string calldata url) external returns(uint256) {
-    _mint(msg.sender, tokenId);
-    _setTokenURI(tokenId, url);
-    MarketItem memory temp = MarketItem(tokenId, msg.sender, false, 0);
-    MarketItems[tokenId] = temp;
+    uint256 _tokenId = tokenId;
+    _mint(msg.sender, _tokenId);
+    _setTokenURI(_tokenId, url);
+    MarketItem memory temp = MarketItem(_tokenId, msg.sender, false, 0);
+    MarketItems[_tokenId] = temp;
     tokenId++;
-    return tokenId -1 ;
+    return _tokenId;
   }
 
   function listItem(uint256 _tokenId, uint256 _price) payable external{
@@ -81,6 +82,7 @@ contract NftMarketplace is ERC721URIStorage {
       temp.owner = msg.sender;
       temp.IsListed = false;
       temp.price = 0;
+      MarketItems[_tokenId] = temp;
     }
     return (success, data);
   }
