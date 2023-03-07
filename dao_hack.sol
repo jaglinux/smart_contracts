@@ -27,7 +27,7 @@ contract Bank {
 
     function balance() external view returns(uint256) {
         console.log("Balance is ", address(this).balance);
-        return address(this).balance / 10**18;
+        return address(this).balance;
     }
 }
 
