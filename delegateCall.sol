@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-contract A {
+contract Impl1 {
     uint256 public counter;
 
     function increment() external {
@@ -9,7 +9,7 @@ contract A {
     }
 }
 
-contract Update {
+contract Impl2 {
     uint256 public counter;
 
     function increment() external {
@@ -17,10 +17,10 @@ contract Update {
     }
 }
 
-contract B {
+contract Proxy {
     uint256 public counter;
     address public owner;
-    address public proxy;
+    address public impl;
 
     constructor() {
         owner = msg.sender;
@@ -31,13 +31,13 @@ contract B {
         owner = _newOwner;
     }
 
-    function setProxy(address _newProxy) external {
+    function setImplementation(address _newImpl) external {
         require(msg.sender == owner, "only Owner");
-        proxy = _newProxy;
+        impl = _newImpl;
     }
 
     function increment() external returns(bool, bytes memory) {
-        (bool flag, bytes memory data) = proxy.delegatecall(abi.encodeWithSignature("increment()"));
+        (bool flag, bytes memory data) = impl.delegatecall(abi.encodeWithSignature("increment()"));
         return (flag, data);
     }
 
