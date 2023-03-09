@@ -38,7 +38,7 @@ contract attack {
         w.withdraw(self, w.balanceOf());
     }
 	
-	function balanceOf() external view returns(uint256) {
+    function balanceOf() external view returns(uint256) {
         return address(this).balance;
     }
 }
