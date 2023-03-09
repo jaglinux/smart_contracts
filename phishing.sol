@@ -16,7 +16,7 @@ contract wallet {
         require(tx.origin == self, "unauth");
         require(address(this).balance >= _val);
         (bool retVal, ) = _to.call{value : _val}("");
-		require(retVal);
+	require(retVal);
         return retVal;
     }
     
