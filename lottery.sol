@@ -35,7 +35,7 @@ contract lottery {
         winning_number = block.number % 10;
     }
     
-    function distribute_rewards() external payable{
+    function distribute_rewards() external {
         require(winner_picked == true, "Winner not yet picked");
         require(owner == msg.sender, "Only owner can distribute");
         
